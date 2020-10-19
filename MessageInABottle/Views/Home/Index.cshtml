@@ -35,7 +35,8 @@
                     </div>
 
                     <div class="modal-footer">
-
+                        <button class="btn btn-default" id="keepBottle">Keep</button>
+                        <button class="btn btn-default" id="returnBottle">Return</button>
                     </div>
 
                 </div>
@@ -51,19 +52,56 @@
 <script type='text/javascript'>
 $(document).ready(function () {
 
+    var m = "";
+    var id = "";
+
     $('#displayMessage').click(function () {
 
         $.ajax({
 
             url: '/Home/DisplayMessage',
+            dataType: "json",
             success: function (data) {
+                
+                m = data["message"];
+                id = data["id"];
 
-                $('#messageID').html(data);
+                $('#messageID').html(m);
                 $('#messageModal').modal("show");
                     
             }
+        });        
+    });
+
+    $('#keepBottle').click(function () {
+
+        $.ajax({
+
+            type: 'POST',
+            data: { 'messageid': id },
+            url: '/Home/KeepBottle',
+            success: function () {
+
+                $('#messageModal').modal("hide");
+            }
         });
     });
+
+    $('#returnBottle').click(function () {
+
+        $.ajax({
+
+            type: 'POST',
+            data: { 'messageid': id },
+            url: '/Home/ReturnBottle',
+            success: function () {
+
+                $('#messageModal').modal("hide");
+            }
+        });
+    });
+
+
 
 });
 </script>

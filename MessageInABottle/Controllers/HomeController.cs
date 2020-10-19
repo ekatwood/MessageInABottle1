@@ -25,12 +25,14 @@ namespace MessageInABottle.Controllers
 
         //POST: /Home/Home
         [HttpPost]
-        public async Task<ActionResult> Index(MessageDB model)
+        public async Task<ActionResult> Index(Messages model)
         {
             //get email address of user
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
             model.WrittenBy = claim.Value;
+
+            Debug.WriteLine(claim.Value.ToString());
 
             try
             {
@@ -65,9 +67,127 @@ namespace MessageInABottle.Controllers
 
             return View();
         }
-        public string DisplayMessage()
+        public async Task<string> DisplayMessage()
         {
-            return "MESSAGE";
+            //user id
+            string id;
+
+            //returned random message, and written by id
+            int messageId = 0;
+            string message = "";
+
+            try {
+
+                //get email address of user. If it fails, set to empty string (not logged in)
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
+                id = claim.Value;
+
+            } catch (Exception e)
+            {
+                id = "";
+            }
+
+
+            //select random message from database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (var command = new SqlCommand("SelectRandom", connection))
+                {
+                    await connection.OpenAsync();
+
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@Id", SqlDbType.VarChar).Value = id;
+
+                    SqlDataReader r = await command.ExecuteReaderAsync();
+
+                    r.Read();
+
+                    message = (string)r["Message"];
+                    messageId = (int)r["Id"];
+                    
+                    connection.Close();
+                }
+            }
+
+            string m = "{\"message\":\""+message+"\",\"id\":\""+messageId.ToString()+"\"}";
+            return m;
+        }
+
+        public async Task<string> KeepBottle(string messageid)
+        {
+            string id = "";
+            try
+            {
+                //get email address of user. If it fails, redirect to login screen
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
+                id = claim.Value;
+
+            }
+            catch (Exception e)
+            {
+                // redirect to log in 
+            }
+
+            try
+            {
+                //select random message from database
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("KeepBottle", connection))
+                    {
+                        await connection.OpenAsync();
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@OwnedById", SqlDbType.VarChar).Value = id;
+                        command.Parameters.Add("@MessageId", SqlDbType.VarChar).Value = messageid;
+
+                        await command.ExecuteNonQueryAsync();
+
+                        connection.Close();
+
+                        return "Message added to Kept Bottles!";
+                    }
+                }
+            }catch(Exception e)
+            {
+                return "An error occured.";
+            }
+            
+
+        }
+
+        public async Task<string> ReturnBottle(string messageid)
+        {
+            try
+            {
+                //select random message from database
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("ReturnBottle", connection))
+                    {
+                        await connection.OpenAsync();
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@MessageId", SqlDbType.VarChar).Value = messageid;
+
+                        await command.ExecuteNonQueryAsync();
+
+                        connection.Close();
+
+                        return "";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+
 
         }
 
