@@ -1,3 +1,56 @@
 ﻿@{
     ViewBag.Title = "My Bottles";
 }
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<h2>My Bottles</h2>
+
+<table>
+
+    @if (ViewBag.MyBottles != null)
+    {
+        foreach (var m in ViewBag.MyBottles)
+        {
+
+            <tr>
+                <td>@m.Item1</td>
+                <td>@Html.ActionLink("Return", "UpdateBottles", new { rowid = m.Item2.ToString(), @class = "btn" })</td>
+            </tr>
+
+        }
+    }
+
+
+</table>
+
+
+
+<script type='text/javascript'>
+
+    $(document).ready(function () {
+
+        $("button").click(function () {
+
+            $.ajax({
+                
+                type: 'POST',
+                data: { 'rowid': this.id },
+                url: '/Home/UpdateBottles',
+                success: function () {
+
+                    
+                }
+            });
+
+
+        });
+
+        
+
+    });
+
+
+</script>

@@ -191,15 +191,124 @@ namespace MessageInABottle.Controllers
 
         }
 
-        public ActionResult MyBottles()
+        public async Task<ActionResult> MyBottles()
         {
-            
+            var id = "";
+            var tupleList = new List<(string, int)> { };
+
+            try
+            {
+                //get email address of user. If it fails, redirect to login screen
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
+                id = claim.Value;
+
+            }
+            catch (Exception e)
+            {
+                return View("Login");
+                // redirect to log in 
+            }
+
+            //get bottles owned by user
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (var command = new SqlCommand("DisplayBottles", connection))
+                {
+                    await connection.OpenAsync();
+
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@OwnedBy", SqlDbType.VarChar).Value = id;
+
+                    SqlDataReader r = await command.ExecuteReaderAsync();
+
+                    //read the results
+                    while (r.Read())
+                    {
+                        tupleList.Add(((string)r["Message"], (int)r["Id"]));
+                    }
+
+                    connection.Close();
+                }
+            }
+
+            ViewBag.MyBottles = tupleList;
+
             return View();
         }
 
-        public ActionResult MyMessages()
+        public async Task<ActionResult> UpdateBottles(string rowid)
         {
-            
+
+            //remove selected bottle
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (var command = new SqlCommand("RemoveBottle", connection))
+                {
+                    await connection.OpenAsync();
+
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@BottleId", SqlDbType.Int).Value = Convert.ToInt32(rowid);
+
+                    await command.ExecuteNonQueryAsync();
+
+                    connection.Close();
+
+                    
+                }
+            }
+
+            //reload page
+            await MyBottles();
+            return  View("MyBottles");
+        }
+
+        public async Task<ActionResult> MyMessages()
+        {
+            var id = "";
+            var tupleList = new List<(string, int, bool)> { };
+
+            try
+            {
+                //get email address of user. If it fails, redirect to login screen
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
+                id = claim.Value;
+
+            }
+            catch (Exception e)
+            {
+                return View("Login");
+                // redirect to log in 
+            }
+
+
+            //select random message from database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (var command = new SqlCommand("DisplayMessages", connection))
+                {
+                    await connection.OpenAsync();
+
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@WrittenBy", SqlDbType.VarChar).Value = id;
+
+                    SqlDataReader r = await command.ExecuteReaderAsync();
+
+                    //read the results
+                    while (r.Read())
+                    {
+                        tupleList.Add(((string)r["Message"], (int)r["SeenCount"], (bool)r["KeptBool"]));
+                    }
+                    
+                    connection.Close();
+                }
+            }
+
+            ViewBag.MyMessages = tupleList;
             return View();
         }
 
