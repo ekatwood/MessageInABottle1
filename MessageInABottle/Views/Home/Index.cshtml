@@ -14,7 +14,7 @@
 
         @using (Html.BeginForm("Index", "Home", FormMethod.Post))
         {
-            @Html.TextBoxFor(m => m.Message, new { @class = "form-control", placeholder = "Write a message...", maxlength = 500 })
+            @Html.TextBoxFor(m => m.Message, new { @class = "form-control", placeholder = "Write a message...", @Value = "", maxlength = 300 })
 
             <input type="submit" value="Send Message" class="btn btn-default" />
             <div class="@ViewBag.MessageType"> @ViewBag.MessageResponse </div>
@@ -22,9 +22,16 @@
 
 
         <hr />
-        <span>A bottle washes ashore...</span>
+
+        @if (ViewBag.A == null)
+        {
+            ViewBag.A = "A";
+        }
+
+        <span>@ViewBag.A bottle washes ashore...</span>
 
         <button class="btn btn-default" data-toggle="modal" id="displayMessage">Pick up bottle</button>
+        <span id="errorMessage"></span>
 
         <div class="modal fade" id="messageModal">
             <div class="modal-dialog">
@@ -80,8 +87,18 @@ $(document).ready(function () {
             type: 'POST',
             data: { 'messageid': id },
             url: '/Home/KeepBottle',
-            success: function () {
+            dataType: 'json',
+            success: function (data) {
 
+                
+
+                if (data["errorMessage"] == '') {
+                    window.location.href = '/Account/Login';
+                }
+                $('#messageModal').modal("hide");
+                $('#errorMessage').html(data["errorMessage"]);
+            },
+            error: function () {
                 $('#messageModal').modal("hide");
             }
         });
@@ -94,8 +111,13 @@ $(document).ready(function () {
             type: 'POST',
             data: { 'messageid': id },
             url: '/Home/ReturnBottle',
-            success: function () {
+            dataType: 'json',
+            success: function (data) {
 
+                $('#messageModal').modal("hide");
+                $('#errorMessage').html(data["errorMessage"]);
+            },
+            error: function () {
                 $('#messageModal').modal("hide");
             }
         });

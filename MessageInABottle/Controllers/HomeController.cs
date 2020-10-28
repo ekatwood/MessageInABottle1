@@ -27,36 +27,86 @@ namespace MessageInABottle.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(Messages model)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return Redirect("~/Account/Login");
+                
+            }
+
+
+            if(String.IsNullOrEmpty(model.Message))
+            {
+                ViewBag.MessageType = "alert-danger";
+                ViewBag.MessageResponse = "Message can't be blank";
+
+                return View();
+            }
+
+
             //get email address of user
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
             model.WrittenBy = claim.Value;
 
-            Debug.WriteLine(claim.Value.ToString());
-
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    using (var command = new SqlCommand("AddMessage", connection))
+                    await connection.OpenAsync();
+
+                    using (var command = new SqlCommand("TodayCount", connection))
                     {
-                        await connection.OpenAsync();
+                        
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.Add("@Message", SqlDbType.VarChar).Value = model.Message;
+                        command.Parameters.Add("@dateadded", SqlDbType.VarChar).Value = DateTime.Today;
+                        Debug.WriteLine(DateTime.Today.ToString());
+                        command.Parameters.Add("@writtenBy", SqlDbType.VarChar).Value = model.WrittenBy;
+
+                        SqlDataReader r = await command.ExecuteReaderAsync();
+
+                        int counter = 0;
+
+                        while (r.Read())
+                        {
+                            counter++;
+                        }
+
+                        if (counter == 5)
+                        {
+                            ViewBag.MessageType = "alert-danger";
+                            ViewBag.MessageResponse = "You can only send 5 messages a day";
+
+                            connection.Close();
+                            r.Close();
+                            return View();
+                        }
+
+                        r.Close();
+
+                    }
+
+                    using (var command = new SqlCommand("AddMessage", connection))
+                    {
+                        
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@Message", SqlDbType.NVarChar).Value = model.Message;
                         command.Parameters.Add("@WrittenBy", SqlDbType.VarChar).Value = model.WrittenBy;
 
                         await command.ExecuteNonQueryAsync();
-
-                        connection.Close();
 
                         ViewBag.MessageType = "alert-success";
                         ViewBag.MessageResponse = "Message sent!";
 
                     }
+
+                    connection.Close();
                 }
             } catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
+
                 ViewBag.MessageType = "alert-danger";
                 ViewBag.MessageResponse = "Error sending message.";
 
@@ -85,38 +135,59 @@ namespace MessageInABottle.Controllers
 
             } catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 id = "";
             }
 
-
-            //select random message from database
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                using (var command = new SqlCommand("SelectRandom", connection))
+                //select random message from database
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    await connection.OpenAsync();
+                    using (var command = new SqlCommand("SelectRandom", connection))
+                    {
+                        await connection.OpenAsync();
 
-                    command.CommandType = CommandType.StoredProcedure;
+                        command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.Add("@Id", SqlDbType.VarChar).Value = id;
+                        command.Parameters.Add("@Id", SqlDbType.VarChar).Value = id;
 
-                    SqlDataReader r = await command.ExecuteReaderAsync();
+                        try
+                        {
+                            SqlDataReader r = await command.ExecuteReaderAsync();
 
-                    r.Read();
+                            r.Read();
 
-                    message = (string)r["Message"];
-                    messageId = (int)r["Id"];
-                    
-                    connection.Close();
+                            message = (string)r["Message"];
+                            messageId = (int)r["Id"];
+                        } catch (Exception e)
+                        {
+                            Debug.WriteLine(e.Message);
+                            message = "There are no new messages at sea. Be the first to write one!";
+                        }
+                        
+
+                        connection.Close();
+                    }
                 }
+                
+            } catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
 
-            string m = "{\"message\":\""+message+"\",\"id\":\""+messageId.ToString()+"\"}";
+            string m = "{\"message\":\"" + message + "\",\"id\":\"" + messageId.ToString() + "\"}";
             return m;
         }
 
         public async Task<string> KeepBottle(string messageid)
         {
+            if (!Request.IsAuthenticated)
+            {
+                //redirect to log in
+                return "{\"errorMessage\":\"\"}";
+
+            }
             string id = "";
             try
             {
@@ -149,12 +220,12 @@ namespace MessageInABottle.Controllers
 
                         connection.Close();
 
-                        return "Message added to Kept Bottles!";
+                        return "{\"errorMessage\":\"Message added to My Bottles!\"}"; ;
                     }
                 }
             }catch(Exception e)
             {
-                return "An error occured.";
+                return "{\"errorMessage\":\"An error occured\"}";
             }
             
 
@@ -179,13 +250,13 @@ namespace MessageInABottle.Controllers
 
                         connection.Close();
 
-                        return "";
+                        return "{\"errorMessage\":\"Bottle returned to sea\"}"; ;
                     }
                 }
             }
             catch (Exception e)
             {
-                return "";
+                return "{\"errorMessage\":\"An error occured\"}";
             }
 
 
