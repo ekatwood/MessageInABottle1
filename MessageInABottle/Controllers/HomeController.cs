@@ -220,7 +220,7 @@ namespace MessageInABottle.Controllers
 
                         connection.Close();
 
-                        return "{\"errorMessage\":\"Message added to My Bottles!\"}"; ;
+                        return "{\"errorMessage\":\"Message added to My Bottles!\",\"another\":\"nother\"}"; ;
                     }
                 }
             }catch(Exception e)
@@ -250,7 +250,7 @@ namespace MessageInABottle.Controllers
 
                         connection.Close();
 
-                        return "{\"errorMessage\":\"Bottle returned to sea\"}"; ;
+                        return "{\"errorMessage\":\"Bottle returned to sea\",\"another\":\"nother\"}"; ;
                     }
                 }
             }

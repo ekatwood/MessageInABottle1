@@ -1,6 +1,50 @@
 ﻿body {
     padding-top: 50px;
-    padding-bottom: 20px;
+    
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.content {
+    min-height: 100%;
+}
+
+.content-inside {
+    
+    padding-bottom: 50px;
+}
+
+.footer {
+    height: 50px;
+    margin-top: -50px;
+}
+
+.myclass {
+    background-image: url("../Images/mobilebckgnd.png");
+    min-height: 100%; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.messagebox{
+    /*padding-top: 70px;*/
+    padding-bottom: 10px;
+}
+
+.inputbtn{
+    margin-top:5px;
+}
+
+.pickupbtn{
+    margin-top: 3px;
+}
+
+.anothertext{
+    padding-top:7px;
 }
 
 /* Set padding to keep content from hitting the edges */

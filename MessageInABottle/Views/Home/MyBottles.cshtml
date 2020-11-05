@@ -3,21 +3,21 @@
 }
 
 <h2>My Bottles</h2>
-
-<table>
+<hr style="margin-top:2px;margin-bottom:7px;" />
 
     @if (ViewBag.MyBottles != null)
     {
         foreach (var m in ViewBag.MyBottles)
         {
-
-            <tr>
-                <td>@m.Item1</td>
-                <td>@Html.ActionLink("Return", "UpdateBottles", new { rowid = m.Item2.ToString(), @class = "btn" })</td>
-            </tr>
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-8">@m.Item1</div>
+                    <div class="col-xs-4">@Html.ActionLink("Return", "UpdateBottles", new { rowid = m.Item2.ToString(), @class = "btn" })</div>
+                </div>
+            </div>
+            <hr style="margin-top:3px;margin-bottom:3px;" />
 
         }
     }
 
-
-</table>

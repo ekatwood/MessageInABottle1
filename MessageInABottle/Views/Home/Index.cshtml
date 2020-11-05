@@ -8,29 +8,27 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap.min.js"></script>
+<div>
+    <center>
+        <div class="form-group">
 
-<center>
-    <div class="form-group">
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+            {
+                @Html.TextBoxFor(m => m.Message, new { @class = "form-control", placeholder = "Write a message...", @Value = "", maxlength = 300 })
 
-        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-        {
-            @Html.TextBoxFor(m => m.Message, new { @class = "form-control", placeholder = "Write a message...", @Value = "", maxlength = 300 })
+                <input type="submit" value="Send Message" class="btn btn-default inputbtn" />
+                <br />
+                <div class="@ViewBag.MessageType"> @ViewBag.MessageResponse </div>
+            }
 
-            <input type="submit" value="Send Message" class="btn btn-default" />
-            <div class="@ViewBag.MessageType"> @ViewBag.MessageResponse </div>
-        }
-
+        </div>
 
         <hr />
 
-        @if (ViewBag.A == null)
-        {
-            ViewBag.A = "A";
-        }
-
-        <span>@ViewBag.A bottle washes ashore...</span>
-
+        <span>A<span id="another"></span> bottle washes ashore...</span>
+        <br />
         <button class="btn btn-default" data-toggle="modal" id="displayMessage">Pick up bottle</button>
+        <br />
         <span id="errorMessage"></span>
 
         <div class="modal fade" id="messageModal">
@@ -48,13 +46,13 @@
 
                 </div>
             </div>
+
+
+
         </div>
 
-
-    </div>
-
-</center>
-
+    </center>
+</div>
 
 <script type='text/javascript'>
 $(document).ready(function () {
@@ -90,12 +88,12 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
 
-                
-
                 if (data["errorMessage"] == '') {
                     window.location.href = '/Account/Login';
                 }
+
                 $('#messageModal').modal("hide");
+                $('#another').html(data["another"]);
                 $('#errorMessage').html(data["errorMessage"]);
             },
             error: function () {
@@ -115,6 +113,7 @@ $(document).ready(function () {
             success: function (data) {
 
                 $('#messageModal').modal("hide");
+                $('#another').html(data["another"]);
                 $('#errorMessage').html(data["errorMessage"]);
             },
             error: function () {

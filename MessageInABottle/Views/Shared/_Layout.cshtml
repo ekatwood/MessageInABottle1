@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -19,7 +21,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="@Url.Action("Index", "Home")" title="Message in a Bottle" class="navbar-brand">
-                    <img style="max-height:25px"alt="Message in a Bottle" src="@Url.Content("~/Images/messageinabottle.png")">
+                    <img style="max-height:25px" alt="Message in a Bottle" src="@Url.Content("~/Images/messageinabottle.png")">
                 </a>
             </div>
             <div class="navbar-collapse collapse">
@@ -32,17 +34,26 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
+    <div class="myclass">
+        <div class="content">
+
+            <div class="content-inside">
+                @RenderBody()
+
+            </div>
+
+
+        </div>
+    </div>
+
+        <footer class="footer">
             <center>
                 <p>Share if you enjoyed:</p>
                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.google.com" target="_blank"><i class="fa fa-facebook"></i>       </a>
                 <a href="https://twitter.com/home?status=https://www.google.com" target="_blank"><i class="fa fa-twitter"></i></a>
             </center>
         </footer>
-    </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

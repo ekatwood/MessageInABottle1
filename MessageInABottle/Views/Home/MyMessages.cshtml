@@ -3,32 +3,34 @@
 }
 
 <h2>My Messages</h2>
+<link href="~/Content/Site.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-xs-8"style="font-weight:bold;">Message</div>
+        <div class="col-xs-4"style="font-weight:bold;">Status</div>
+    </div>
+    <hr style="margin-top:2px;margin-bottom:7px;" />
+    @foreach (var m in ViewBag.MyMessages)
+    {
+        string status = "Seen " + m.Item2.ToString() + " time(s)";
 
-<table>
-    <tr>
-        <th>Message</th>
-        <th>Status</th>
-    </tr>
-    
-        @foreach (var m in ViewBag.MyMessages)
+        if (m.Item3 == true)
         {
-            string status = "Seen " + m.Item2.ToString() + " time(s)";
-
-            if (m.Item3 == true) {
-                status = status + " and kept";
-            }
-
-            if(m.Item2 == 0)
-            {
-                status = "At sea";
-            }
-
-            <tr>
-                <td>@m.Item1</td>
-                <td>@status</td>
-            </tr>
-
-
+            status = status + " and kept";
         }
 
-</table>
+        if (m.Item2 == 0)
+        {
+            status = "At sea";
+        }
+
+
+        <div class="row">
+            <div class="col-xs-8">@m.Item1</div>
+            <div class="col-xs-4">@status</div>
+        </div>
+        <hr style="margin-top:3px;margin-bottom:3px;" />
+
+
+    }
+</div>
