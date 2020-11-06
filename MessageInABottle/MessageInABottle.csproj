@@ -189,11 +189,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\background.jpeg" />
-    <Content Include="Images\background2.jpeg" />
-    <Content Include="Images\messageinabottle.png" />
-    <Content Include="Images\rocks.jpg" />
     <Content Include="Images\mobilebckgnd.png" />
+    <Content Include="Images\bottlesbckgrnd.png" />
+    <Content Include="Images\messagesbckgrnd.png" />
+    <Content Include="Images\waveicon.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -243,6 +242,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\_Message.cshtml" />
+    <Content Include="Views\Shared\_LayoutMessages.cshtml" />
+    <Content Include="Views\Shared\_LayoutBottles.cshtml" />
+    <Content Include="Views\Shared\_LayoutHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

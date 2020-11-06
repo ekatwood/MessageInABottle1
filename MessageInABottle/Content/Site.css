@@ -8,6 +8,18 @@ html, body {
     margin: 0;
 }
 
+h2{
+    margin-top:0;
+    padding-top:10px;
+    padding-left:5px;
+}
+
+.genericpage {
+    background-color: #FFFBF2;
+    color: #404952;
+    min-height:100%;
+}
+
 .content {
     min-height: 100%;
 }
@@ -19,10 +31,63 @@ html, body {
 
 .footer {
     height: 50px;
-    margin-top: -50px;
+    margin-top: -62px;
 }
 
-.myclass {
+.messagebtn{
+    margin-top:3px;
+}
+
+.anotherbottle{
+    margin-left: 20px;
+    font-style:italic;
+}
+
+.btnstyles {
+    background-color: #404952;
+    color: #FFFBF2;
+    border-color: #FFFBF2;
+    
+}
+
+.btnstyles:hover {
+    background-color: #404952;
+    color: #FFFBF2;
+    border-color: #FFFBF2;
+}
+
+.btnstyles:active, .btnstyles:focus {
+    background-color: #FFFBF2;
+    color: #404952;
+    border-color: #404952;
+}
+
+.altbtnstyles {
+    background-color: #FFFBF2;
+    color: #404952;
+    border-color: #404952;
+}
+
+.altbtnstyles:hover {
+    background-color: #FFFBF2;
+    color: #404952;
+    border-color: #404952;
+}
+
+.altbtnstyles:active, .altbtnstyles:focus {
+    background-color: #404952;
+    color: #FFFBF2;
+    border-color: #FFFBF2;
+}
+
+.errormsg {
+    background-color: #404952;
+    color: #FFFBF2;
+    font-style:italic;
+    font-size:12px;
+}
+
+.mainbckgrnd {
     background-image: url("../Images/mobilebckgnd.png");
     min-height: 100%; /* You must set a specified height */
     background-position: center; /* Center the image */
@@ -30,23 +95,32 @@ html, body {
     background-size: cover; /* Resize the background image to cover the entire container */
 }
 
+.messagesbckgrnd {
+    background-image: url("../Images/messagesbckgrnd.png");
+    min-height: 100%; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+
+.bottlesbckgrnd {
+    background-image: url("../Images/bottlesbckgrnd.png");
+    min-height: 100%; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
 .messagebox{
-    /*padding-top: 70px;*/
-    padding-bottom: 10px;
+    padding-top: 100px;
+
 }
 
-.inputbtn{
-    margin-top:5px;
+.boundaries{
+    margin-right:12px;
+    margin-left:12px;
 }
-
-.pickupbtn{
-    margin-top: 3px;
-}
-
-.anothertext{
-    padding-top:7px;
-}
-
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
