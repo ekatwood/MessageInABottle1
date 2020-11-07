@@ -1,6 +1,11 @@
-﻿body {
+﻿@font-face {
+    font-family: Sumida;
+    src: url("../fonts/Sumida.woff")
+}
+
+body {
     padding-top: 50px;
-    
+    font-family:'Bookman Old Style'
 }
 
 html, body {
@@ -14,10 +19,30 @@ h2{
     padding-left:5px;
 }
 
+.navnav {
+    background-color: #404952;
+    height:30px;
+}
+
+
 .genericpage {
     background-color: #FFFBF2;
     color: #404952;
     min-height:100%;
+}
+
+.darklight {
+    background-color: #404952;
+    color: #FFFBF2;
+    padding-right:2px;
+    padding-left:2px;
+}
+
+.lightdark {
+    background-color: #FFFBF2;
+    color: #404952;
+    padding-right: 2px;
+    padding-left: 2px;
 }
 
 .content {
@@ -25,7 +50,6 @@ h2{
 }
 
 .content-inside {
-    
     padding-bottom: 50px;
 }
 
@@ -34,13 +58,58 @@ h2{
     margin-top: -62px;
 }
 
+.footertext {
+    font-size: 12px;
+    background-color: #404952;
+    color: #FFFBF2;
+}
+
+.footertextgeneric {
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.fbicon {
+    font-size: 20px;
+    color: #3b5998;
+    margin-right:1px;
+}
+
+.twittericon {
+    font-size: 20px;
+    color: #1DA1F2;
+    margin-left:1px;
+}
+
+.message{
+    font-family:Sumida;
+    font-size:27px;
+}
+
 .messagebtn{
     margin-top:3px;
 }
 
-.anotherbottle{
+.modalmods{
+    margin-top:150px;
+}
+
+.modal-body p {
+    word-wrap: break-word;
+}
+
+.modalbckgrnd {
+    background-image: url("../Images/parchment.png");
+    min-height: 100%; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+
+.anotherbottle {
     margin-left: 20px;
-    font-style:italic;
+    font-style: italic;
 }
 
 .btnstyles {
@@ -89,23 +158,6 @@ h2{
 
 .mainbckgrnd {
     background-image: url("../Images/mobilebckgnd.png");
-    min-height: 100%; /* You must set a specified height */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-}
-
-.messagesbckgrnd {
-    background-image: url("../Images/messagesbckgrnd.png");
-    min-height: 100%; /* You must set a specified height */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-}
-
-
-.bottlesbckgrnd {
-    background-image: url("../Images/bottlesbckgrnd.png");
     min-height: 100%; /* You must set a specified height */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */

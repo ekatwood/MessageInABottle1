@@ -1,10 +1,9 @@
 ﻿@{
     ViewBag.Title = "My Bottles";
-    Layout = "~/Views/Shared/_LayoutBottles.cshtml";
 }
 
 <h2>My Bottles</h2>
-<hr style="margin-top:2px;margin-bottom:7px;" />
+<hr style="margin-top:2px;margin-bottom:7px;" class="boundaries" />
 
     @if (ViewBag.MyBottles != null)
     {
@@ -17,7 +16,7 @@
                     <div class="col-xs-4">@Html.ActionLink("Return", "UpdateBottles", new { rowid = m.Item2.ToString(), @class = "btn" })</div>
                 </div>
             </div>
-            <hr style="margin-top:3px;margin-bottom:3px;" />
+            <hr style="margin-top:3px;margin-bottom:3px;" class="boundaries" />
 
         }
     }
