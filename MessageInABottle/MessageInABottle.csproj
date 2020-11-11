@@ -193,6 +193,7 @@
     <Content Include="Images\bottlesbckgrnd.png" />
     <Content Include="Images\messagesbckgrnd.png" />
     <Content Include="Images\parchment.png" />
+    <Content Include="Images\icon.png" />
     <Content Include="Images\waveicon.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

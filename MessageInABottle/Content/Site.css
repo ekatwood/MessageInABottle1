@@ -4,8 +4,7 @@
 }
 
 body {
-    padding-top: 50px;
-    font-family:'Bookman Old Style'
+padding-top: 44px;
 }
 
 html, body {
@@ -19,23 +18,63 @@ h2{
     padding-left:5px;
 }
 
-.navnav {
-    background-color: #404952;
-    height:30px;
+.navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
+.threedots:after {
+    content: '\2807';
+    font-size: 20px;
+    color: #FFFBF2;
+    background-color: #404952;
+}
+
+.threedotsbtn{
+    border:none;
+    padding-top:2px;
+    padding-bottom:2px;
+}
+
+.threedotsbtn:hover {
+    background-color: #404952;
+}
+
+.threedotsbtn:active {
+    background-color: #404952;
+}
+
+.navbar {
+    background-color: #404952;
+    min-height:44px;
+}
+
+.navbar-brand {
+    height: 44px;
+}
+
+.navbar-toggle{
+    margin-top:7px;
+    margin-bottom:0px;
+    margin-right:5px;
+}
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+    background-color: #404952;
+}
 
 .genericpage {
     background-color: #FFFBF2;
     color: #404952;
-    min-height:100%;
+    min-height: 100%;
 }
 
 .darklight {
     background-color: #404952;
     color: #FFFBF2;
-    padding-right:2px;
-    padding-left:2px;
+    padding-right:3px;
+    padding-left:3px;
+    padding-top:2px;
+    padding-bottom:2px;
 }
 
 .lightdark {
@@ -109,50 +148,50 @@ h2{
 
 .anotherbottle {
     margin-left: 20px;
-    font-style: italic;
+    font-size:31px;
+    font-family:Sumida
 }
 
 .btnstyles {
     background-color: #404952;
     color: #FFFBF2;
-    border-color: #FFFBF2;
+    border:none;
     
 }
 
 .btnstyles:hover {
     background-color: #404952;
     color: #FFFBF2;
-    border-color: #FFFBF2;
+    border:none;
 }
 
 .btnstyles:active, .btnstyles:focus {
     background-color: #FFFBF2;
     color: #404952;
-    border-color: #404952;
+    border:none;
 }
 
 .altbtnstyles {
     background-color: #FFFBF2;
     color: #404952;
-    border-color: #404952;
+    border:none;
 }
 
 .altbtnstyles:hover {
     background-color: #FFFBF2;
     color: #404952;
-    border-color: #404952;
+    border:none;
 }
 
 .altbtnstyles:active, .altbtnstyles:focus {
     background-color: #404952;
     color: #FFFBF2;
-    border-color: #FFFBF2;
+    border:none;
 }
 
 .errormsg {
     background-color: #404952;
     color: #FFFBF2;
-    font-style:italic;
     font-size:12px;
 }
 

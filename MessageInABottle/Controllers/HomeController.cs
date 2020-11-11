@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
 using System.Security.Claims;
+using Microsoft.AspNet.Identity;
 
 namespace MessageInABottle.Controllers
 {
@@ -37,7 +38,7 @@ namespace MessageInABottle.Controllers
             if(String.IsNullOrEmpty(model.Message))
             {
                 ViewBag.MessageType = "alert-danger";
-                ViewBag.MessageResponse = "Message can't be blank";
+                ViewBag.MessageResponse = "Message can't be blank.";
 
                 return View();
             }
@@ -75,7 +76,7 @@ namespace MessageInABottle.Controllers
                         if (counter == 5)
                         {
                             ViewBag.MessageType = "alert-danger";
-                            ViewBag.MessageResponse = "You can only send 5 messages a day";
+                            ViewBag.MessageResponse = "You can only send 5 messages a day!";
 
                             connection.Close();
                             r.Close();
@@ -207,9 +208,38 @@ namespace MessageInABottle.Controllers
                 //select random message from database
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    await connection.OpenAsync();
+
+                    using (var command = new SqlCommand("KeptCount", connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@datekept", SqlDbType.VarChar).Value = DateTime.Today;
+                        Debug.WriteLine(DateTime.Today.ToString());
+                        command.Parameters.Add("@ownedBy", SqlDbType.VarChar).Value = User.Identity.GetUserName();
+                        Debug.WriteLine(User.Identity.GetUserName());
+                        SqlDataReader r = await command.ExecuteReaderAsync();
+
+                        int counter = 0;
+
+                        while (r.Read())
+                        {
+                            counter++;
+                        }
+
+                        if (counter == 5)
+                        {
+                            connection.Close();
+                            r.Close();
+                            return "{\"errorMessage\":\"You can only keep 5 messages a day.\"}";
+                        }
+
+                        r.Close();
+
+                    }
                     using (var command = new SqlCommand("KeepBottle", connection))
                     {
-                        await connection.OpenAsync();
 
                         command.CommandType = CommandType.StoredProcedure;
 
@@ -250,7 +280,7 @@ namespace MessageInABottle.Controllers
 
                         connection.Close();
 
-                        return "{\"errorMessage\":\"Bottle returned to sea\",\"another\":\"nother\"}"; ;
+                        return "{\"errorMessage\":\"Bottle returned to sea!\",\"another\":\"nother\"}"; ;
                     }
                 }
             }
@@ -385,7 +415,7 @@ namespace MessageInABottle.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "e.rock.at@gmail.com";
+            ViewBag.Message = "To get in touch: e.rock.at@gmail.com";
 
             return View();
         }
