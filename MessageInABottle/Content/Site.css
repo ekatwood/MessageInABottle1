@@ -120,6 +120,32 @@ h2{
     margin-left:1px;
 }
 
+.fblogin {
+    background-color: #3b5998;
+    color:white;
+    margin-top:5px;
+    width:200px;
+    border:none;
+}
+
+.fblogin:hover {
+    background-color: #3b5998;
+    color: white;
+}
+
+.googlelogin {
+    background-color: #DB4437;
+    color: white;
+    margin-top: 5px;
+    width: 200px;
+    border: none;
+}
+
+.googlelogin:hover {
+    background-color: #DB4437;
+    color: white;
+}
+
 .message{
     font-family:Sumida;
     font-size:27px;

@@ -54,15 +54,15 @@ namespace MessageInABottle
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "2811295565793301",
+               appSecret: "487205ee4b06897ebc786a3368e9f225");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "406967203364-0gelh0icv347hg7ua0c8571qc6afeoba.apps.googleusercontent.com",
+                ClientSecret = "X1ykLoFIVBb70AzumO37Q_mh"
+            });
         }
     }
 }

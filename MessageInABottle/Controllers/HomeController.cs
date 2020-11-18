@@ -43,11 +43,14 @@ namespace MessageInABottle.Controllers
                 return View();
             }
 
-
             //get email address of user
+            model.WrittenBy = User.Identity.GetUserName();
+
+            /*
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
-            model.WrittenBy = claim.Value;
+            model.WrittenBy = claim.Value; 
+            */
 
             try
             {
@@ -127,6 +130,14 @@ namespace MessageInABottle.Controllers
             int messageId = 0;
             string message = "";
 
+
+            if (String.IsNullOrEmpty(User.Identity.GetUserName())){
+                id = "";
+            }
+            else
+                id = User.Identity.GetUserName();
+
+            /*
             try {
 
                 //get email address of user. If it fails, set to empty string (not logged in)
@@ -139,6 +150,7 @@ namespace MessageInABottle.Controllers
                 Debug.WriteLine(e.Message);
                 id = "";
             }
+            */
 
             try
             {
@@ -189,7 +201,16 @@ namespace MessageInABottle.Controllers
                 return "{\"errorMessage\":\"\"}";
 
             }
-            string id = "";
+            string id;
+
+            if (String.IsNullOrEmpty(User.Identity.GetUserName()))
+            {
+                id = "";
+            }
+            else
+                id = User.Identity.GetUserName();
+
+            /*
             try
             {
                 //get email address of user. If it fails, redirect to login screen
@@ -202,6 +223,7 @@ namespace MessageInABottle.Controllers
             {
                 // redirect to log in 
             }
+            */
 
             try
             {
@@ -294,9 +316,25 @@ namespace MessageInABottle.Controllers
 
         public async Task<ActionResult> MyBottles()
         {
+            if (!Request.IsAuthenticated)
+            {
+                //redirect to log in
+                return View("Login");
+
+            }
             var id = "";
+
+            if (String.IsNullOrEmpty(User.Identity.GetUserName()))
+            {
+                id = "";
+            }
+            else
+                id = User.Identity.GetUserName();
+
+
             var tupleList = new List<(string, int)> { };
 
+            /*
             try
             {
                 //get email address of user. If it fails, redirect to login screen
@@ -310,6 +348,7 @@ namespace MessageInABottle.Controllers
                 return View("Login");
                 // redirect to log in 
             }
+            */
 
             //get bottles owned by user
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -368,9 +407,24 @@ namespace MessageInABottle.Controllers
 
         public async Task<ActionResult> MyMessages()
         {
+            if (!Request.IsAuthenticated)
+            {
+                //redirect to log in
+                return View("Login");
+
+            }
+
             var id = "";
             var tupleList = new List<(string, int, bool)> { };
 
+            if (String.IsNullOrEmpty(User.Identity.GetUserName()))
+            {
+                id = "";
+            }
+            else
+                id = User.Identity.GetUserName();
+
+            /*
             try
             {
                 //get email address of user. If it fails, redirect to login screen
@@ -383,7 +437,7 @@ namespace MessageInABottle.Controllers
             {
                 return View("Login");
                 // redirect to log in 
-            }
+            }*/
 
 
             //select random message from database
