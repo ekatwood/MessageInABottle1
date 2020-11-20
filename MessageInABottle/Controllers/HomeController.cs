@@ -43,10 +43,7 @@ namespace MessageInABottle.Controllers
                 return View();
             }
 
-            //get email address of user
-            model.WrittenBy = User.Identity.GetUserName();
-
-            /*
+            /* old way of getting username
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
             model.WrittenBy = claim.Value; 
@@ -54,6 +51,11 @@ namespace MessageInABottle.Controllers
 
             try
             {
+
+                //get email address of user
+                model.WrittenBy = User.Identity.GetUserName();
+
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
@@ -109,7 +111,23 @@ namespace MessageInABottle.Controllers
                 }
             } catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                //send message to DB
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("LogException", connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@inFunction", SqlDbType.VarChar).Value = "Index (Post)";
+                        command.Parameters.Add("@excMessage", SqlDbType.VarChar).Value = e.Message;
+
+                        await command.ExecuteNonQueryAsync();
+
+                    }
+
+                    connection.Close();
+                }
 
                 ViewBag.MessageType = "alert-danger";
                 ViewBag.MessageResponse = "Error sending message.";
@@ -130,30 +148,16 @@ namespace MessageInABottle.Controllers
             int messageId = 0;
             string message = "";
 
-
-            if (String.IsNullOrEmpty(User.Identity.GetUserName())){
-                id = "";
-            }
-            else
-                id = User.Identity.GetUserName();
-
-            /*
-            try {
-
-                //get email address of user. If it fails, set to empty string (not logged in)
-                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
-                id = claim.Value;
-
-            } catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                id = "";
-            }
-            */
-
             try
             {
+                if (String.IsNullOrEmpty(User.Identity.GetUserName()))
+                {
+                    id = "";
+                }
+                else
+                    id = User.Identity.GetUserName();
+
+
                 //select random message from database
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -186,7 +190,23 @@ namespace MessageInABottle.Controllers
                 
             } catch(Exception e)
             {
-                Debug.WriteLine(e.Message);
+                //send message to DB
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("LogException", connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@inFunction", SqlDbType.VarChar).Value = "DisplayMessage()";
+                        command.Parameters.Add("@excMessage", SqlDbType.VarChar).Value = e.Message;
+
+                        await command.ExecuteNonQueryAsync();
+
+                    }
+
+                    connection.Close();
+                }
             }
 
             string m = "{\"message\":\"" + message + "\",\"id\":\"" + messageId.ToString() + "\"}";
@@ -203,30 +223,16 @@ namespace MessageInABottle.Controllers
             }
             string id;
 
-            if (String.IsNullOrEmpty(User.Identity.GetUserName()))
-            {
-                id = "";
-            }
-            else
-                id = User.Identity.GetUserName();
-
-            /*
             try
             {
-                //get email address of user. If it fails, redirect to login screen
-                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
-                id = claim.Value;
+                if (String.IsNullOrEmpty(User.Identity.GetUserName()))
+                {
+                    id = "";
+                }
+                else
+                    id = User.Identity.GetUserName();
 
-            }
-            catch (Exception e)
-            {
-                // redirect to log in 
-            }
-            */
 
-            try
-            {
                 //select random message from database
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -277,6 +283,25 @@ namespace MessageInABottle.Controllers
                 }
             }catch(Exception e)
             {
+
+                //send message to DB
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("LogException", connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@inFunction", SqlDbType.VarChar).Value = "KeepBottle(string messageid)";
+                        command.Parameters.Add("@excMessage", SqlDbType.VarChar).Value = e.Message;
+
+                        await command.ExecuteNonQueryAsync();
+
+                    }
+
+                    connection.Close();
+                }
+
                 return "{\"errorMessage\":\"An error occured\"}";
             }
             
@@ -308,6 +333,24 @@ namespace MessageInABottle.Controllers
             }
             catch (Exception e)
             {
+                //send message to DB
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("LogException", connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@inFunction", SqlDbType.VarChar).Value = "ReturnBottle(string messageid)";
+                        command.Parameters.Add("@excMessage", SqlDbType.VarChar).Value = e.Message;
+
+                        await command.ExecuteNonQueryAsync();
+
+                    }
+
+                    connection.Close();
+                }
+
                 return "{\"errorMessage\":\"An error occured\"}";
             }
 
@@ -319,61 +362,71 @@ namespace MessageInABottle.Controllers
             if (!Request.IsAuthenticated)
             {
                 //redirect to log in
-                return View("Login");
+                return Redirect("~/Account/Login");
 
             }
+
             var id = "";
-
-            if (String.IsNullOrEmpty(User.Identity.GetUserName()))
-            {
-                id = "";
-            }
-            else
-                id = User.Identity.GetUserName();
-
-
             var tupleList = new List<(string, int)> { };
 
-            /*
             try
             {
-                //get email address of user. If it fails, redirect to login screen
-                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
-                id = claim.Value;
 
-            }
-            catch (Exception e)
-            {
-                return View("Login");
-                // redirect to log in 
-            }
-            */
-
-            //get bottles owned by user
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (var command = new SqlCommand("DisplayBottles", connection))
+                if (String.IsNullOrEmpty(User.Identity.GetUserName()))
                 {
-                    await connection.OpenAsync();
+                    id = "";
+                }
+                else
+                    id = User.Identity.GetUserName();
 
-                    command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.Add("@OwnedBy", SqlDbType.VarChar).Value = id;
-
-                    SqlDataReader r = await command.ExecuteReaderAsync();
-
-                    //read the results
-                    while (r.Read())
+                //get bottles owned by user
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("DisplayBottles", connection))
                     {
-                        tupleList.Add(((string)r["Message"], (int)r["Id"]));
+                        await connection.OpenAsync();
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@OwnedBy", SqlDbType.VarChar).Value = id;
+
+                        SqlDataReader r = await command.ExecuteReaderAsync();
+
+                        //read the results
+                        while (r.Read())
+                        {
+                            tupleList.Add(((string)r["Message"], (int)r["Id"]));
+                        }
+
+                        connection.Close();
+                    }
+                }
+
+                ViewBag.MyBottles = tupleList;
+
+
+            }
+            catch(Exception e)
+            {
+                //send message to DB
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("LogException", connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@inFunction", SqlDbType.VarChar).Value = "MyBottles()";
+                        command.Parameters.Add("@excMessage", SqlDbType.VarChar).Value = e.Message;
+
+                        await command.ExecuteNonQueryAsync();
+
                     }
 
                     connection.Close();
                 }
             }
-
-            ViewBag.MyBottles = tupleList;
 
             return View();
         }
@@ -381,27 +434,52 @@ namespace MessageInABottle.Controllers
         public async Task<ActionResult> UpdateBottles(string rowid)
         {
 
-            //remove selected bottle
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                using (var command = new SqlCommand("RemoveBottle", connection))
+                //remove selected bottle
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    await connection.OpenAsync();
+                    using (var command = new SqlCommand("RemoveBottle", connection))
+                    {
+                        await connection.OpenAsync();
 
-                    command.CommandType = CommandType.StoredProcedure;
+                        command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.Add("@BottleId", SqlDbType.Int).Value = Convert.ToInt32(rowid);
+                        command.Parameters.Add("@BottleId", SqlDbType.Int).Value = Convert.ToInt32(rowid);
 
-                    await command.ExecuteNonQueryAsync();
+                        await command.ExecuteNonQueryAsync();
+
+                        connection.Close();
+
+
+                    }
+                }
+
+                //reload page
+                await MyBottles();
+
+            }
+            catch (Exception e)
+            {
+                //send message to DB
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("LogException", connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@inFunction", SqlDbType.VarChar).Value = "UpdateBottles(string rowid)";
+                        command.Parameters.Add("@excMessage", SqlDbType.VarChar).Value = e.Message;
+
+                        await command.ExecuteNonQueryAsync();
+
+                    }
 
                     connection.Close();
-
-                    
                 }
             }
-
-            //reload page
-            await MyBottles();
+            
             return  View("MyBottles");
         }
 
@@ -410,60 +488,72 @@ namespace MessageInABottle.Controllers
             if (!Request.IsAuthenticated)
             {
                 //redirect to log in
-                return View("Login");
+                return Redirect("~/Account/Login");
 
             }
 
             var id = "";
             var tupleList = new List<(string, int, bool)> { };
 
-            if (String.IsNullOrEmpty(User.Identity.GetUserName()))
-            {
-                id = "";
-            }
-            else
-                id = User.Identity.GetUserName();
-
-            /*
             try
             {
-                //get email address of user. If it fails, redirect to login screen
-                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
-                id = claim.Value;
+
+                if (String.IsNullOrEmpty(User.Identity.GetUserName()))
+                {
+                    id = "";
+                }
+                else
+                    id = User.Identity.GetUserName();
+
+
+                //select random message from database
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (var command = new SqlCommand("DisplayMessages", connection))
+                    {
+                        await connection.OpenAsync();
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@WrittenBy", SqlDbType.VarChar).Value = id;
+
+                        SqlDataReader r = await command.ExecuteReaderAsync();
+
+                        //read the results
+                        while (r.Read())
+                        {
+                            tupleList.Add(((string)r["Message"], (int)r["SeenCount"], (bool)r["KeptBool"]));
+                        }
+
+                        connection.Close();
+                    }
+                }
+
+                ViewBag.MyMessages = tupleList;
 
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                return View("Login");
-                // redirect to log in 
-            }*/
-
-
-            //select random message from database
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (var command = new SqlCommand("DisplayMessages", connection))
+                //send message to DB
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    await connection.OpenAsync();
-
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.Add("@WrittenBy", SqlDbType.VarChar).Value = id;
-
-                    SqlDataReader r = await command.ExecuteReaderAsync();
-
-                    //read the results
-                    while (r.Read())
+                    using (var command = new SqlCommand("LogException", connection))
                     {
-                        tupleList.Add(((string)r["Message"], (int)r["SeenCount"], (bool)r["KeptBool"]));
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@inFunction", SqlDbType.VarChar).Value = "MyMessages()";
+                        command.Parameters.Add("@excMessage", SqlDbType.VarChar).Value = e.Message;
+
+                        await command.ExecuteNonQueryAsync();
+
                     }
-                    
+
                     connection.Close();
                 }
             }
 
-            ViewBag.MyMessages = tupleList;
+            
             return View();
         }
 

@@ -17,6 +17,33 @@ h2{
     padding-top:10px;
     padding-left:5px;
 }
+/* Portrait */
+@media only screen and (max-device-width: 828px) and (orientation: portrait) {
+    #homepage {
+        background-image: url("../Images/small_portrait.png");
+    }
+}
+
+/* Landscape */
+@media only screen and (max-device-width: 1136px) and (orientation: landscape) {
+    #homepage {
+        background-image: url("../Images/small_landscape.png");
+    }
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 829px) and (orientation: portrait) {
+    #homepage {
+        background-image: url("../Images/big_portrait.png");
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 1137px) and (orientation: landscape) {
+    #homepage {
+        background-image: url("../Images/big_landscape.png");
+    }
+}
 
 .navbar-nav > li > a {
     padding-top: 10px;
@@ -222,7 +249,7 @@ h2{
 }
 
 .mainbckgrnd {
-    background-image: url("../Images/mobilebckgnd.png");
+    
     min-height: 100%; /* You must set a specified height */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */

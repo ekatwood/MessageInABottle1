@@ -189,12 +189,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\big_landscape.png" />
+    <Content Include="Images\big_portrait.png" />
     <Content Include="Images\mobilebckgnd.png" />
-    <Content Include="Images\bottlesbckgrnd.png" />
-    <Content Include="Images\messagesbckgrnd.png" />
     <Content Include="Images\parchment.png" />
     <Content Include="Images\icon.png" />
-    <Content Include="Images\waveicon.png" />
+    <Content Include="Images\small_landscape.png" />
+    <Content Include="Images\small_portrait.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\SumidaScriptDemoRegular-X3GEg.otf" />
