@@ -17,26 +17,24 @@
 
             @using (Html.BeginForm("Index", "Home", FormMethod.Post))
             {
-                @Html.TextBoxFor(m => m.Message, new { @class = "form-control", placeholder = "Write a message...", @Value = "", maxlength = 300 })
+                @Html.TextAreaFor(m => m.Message, new { @class = "form-control text-area", placeholder = "Write a message in a bottle!", @Value = "", maxlength = 300 })
 
                 <input type="submit" value="Send Message" class="btn btnstyles messagebtn" />
                 <br />
-                <span class="errormsg"> @ViewBag.MessageResponse </span>
+                <div class="errormsgwrapper"><span class="errormsg"> @ViewBag.MessageResponse </span></div>
             }
 
         </div>
-
-        <hr class="boundaries" />
     
-        <h4><span class="anotherbottle">A<span id="another"></span> bottle washes ashore...</span></h4>
+        <h4><span class="anotherbottle">A<span id="another"></span> mysterious bottle washes ashore...</span></h4>
     
-        <button class="altbtnstyles btn" data-toggle="modal" id="displayMessage">Pick up bottle</button>
+        <button class="btnstyles btn" data-toggle="modal" id="displayMessage">Pick up bottle</button>
         <br />
         <span class="errormsg"id="errorMessage"></span>
 
         <div class="modal fade modalmods" id="messageModal">
             <div class="modal-dialog">
-                <div class="modal-content modalbckgrnd" id="homepage">
+                <div class="modal-content modalbckgrnd">
 
                     <div class="modal-body message">
                         <span id="messageID"></span>

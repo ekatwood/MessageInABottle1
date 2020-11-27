@@ -17,7 +17,9 @@ namespace MessageInABottle.Controllers
 {
     public class HomeController : Controller
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        //private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        private string connectionString = "Server=tcp:messageinabottledbserver.database.windows.net,1433;Initial Catalog=MessageInABottle_db;Persist Security Info=False;User ID=ekatwood;Password=eka132EKA;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
 
         public ActionResult Index()
         {
@@ -114,6 +116,8 @@ namespace MessageInABottle.Controllers
                 //send message to DB
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    await connection.OpenAsync();
+
                     using (var command = new SqlCommand("LogException", connection))
                     {
 
@@ -193,6 +197,8 @@ namespace MessageInABottle.Controllers
                 //send message to DB
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    await connection.OpenAsync();
+
                     using (var command = new SqlCommand("LogException", connection))
                     {
 
@@ -287,6 +293,8 @@ namespace MessageInABottle.Controllers
                 //send message to DB
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    await connection.OpenAsync();
+
                     using (var command = new SqlCommand("LogException", connection))
                     {
 
@@ -336,6 +344,8 @@ namespace MessageInABottle.Controllers
                 //send message to DB
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    await connection.OpenAsync();
+
                     using (var command = new SqlCommand("LogException", connection))
                     {
 
@@ -412,6 +422,8 @@ namespace MessageInABottle.Controllers
                 //send message to DB
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    await connection.OpenAsync();
+
                     using (var command = new SqlCommand("LogException", connection))
                     {
 
@@ -464,6 +476,8 @@ namespace MessageInABottle.Controllers
                 //send message to DB
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    await connection.OpenAsync();
+
                     using (var command = new SqlCommand("LogException", connection))
                     {
 
@@ -537,6 +551,8 @@ namespace MessageInABottle.Controllers
                 //send message to DB
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    await connection.OpenAsync();
+
                     using (var command = new SqlCommand("LogException", connection))
                     {
 
@@ -559,7 +575,7 @@ namespace MessageInABottle.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "To get in touch: e.rock.at@gmail.com";
+            ViewBag.Message = "To get in touch: app.messageinabottle@gmail.com";
 
             return View();
         }

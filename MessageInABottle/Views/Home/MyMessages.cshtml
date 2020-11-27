@@ -5,32 +5,39 @@
 <h2>My Messages</h2>
 <link href="~/Content/Site.css" rel="stylesheet" />
 <div class="container">
-    <div class="row">
-        <div class="col-xs-8" style="font-weight:bold;">Message</div>
-        <div class="col-xs-4" style="font-weight:bold;">Status</div>
-    </div>
-    <hr style="margin-top:2px;margin-bottom:7px;" />
-    @foreach (var m in ViewBag.MyMessages)
+    @if (ViewBag.MyMessages.Count != 0)
     {
-        string status = "Seen " + m.Item2.ToString() + " time(s)";
-
-        if (m.Item3 == true)
-        {
-            status = status + " and kept";
-        }
-
-        if (m.Item2 == 0)
-        {
-            status = "At sea";
-        }
-
-
         <div class="row">
-            <div class="col-xs-8">@m.Item1</div>
-            <div class="col-xs-4">@status</div>
+            <div class="col-xs-8" style="font-weight:bold;">Message</div>
+            <div class="col-xs-4" style="font-weight:bold;">Status</div>
         </div>
-        <hr style="margin-top:3px;margin-bottom:3px;" />
+        <hr style="margin-top:2px;margin-bottom:7px;" />
+        foreach (var m in ViewBag.MyMessages)
+        {
+            string status = "Seen " + m.Item2.ToString() + " time(s)";
+
+            if (m.Item3 == true)
+            {
+                status = status + " and kept";
+            }
+
+            if (m.Item2 == 0)
+            {
+                status = "At sea";
+            }
 
 
+            <div class="row">
+                <div class="col-xs-8">@m.Item1</div>
+                <div class="col-xs-4">@status</div>
+            </div>
+            <hr style="margin-top:3px;margin-bottom:3px;" />
+
+
+        }
+    }
+    else
+    {
+        <div class="registerHeader boundaries">Ye haven't sent any messages yet! Send one ya salty dogge!</div>
     }
 </div>
