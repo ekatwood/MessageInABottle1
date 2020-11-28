@@ -4,7 +4,7 @@
 }
 
 body {
-padding-top: 44px;
+    padding-top: 44px;
 }
 
 html, body {
@@ -28,6 +28,10 @@ h2{
 
 textarea.form-control {
     height: 70px;
+}
+
+.mainpage{
+    padding-bottom:52px;
 }
 /*
 
@@ -107,7 +111,6 @@ textarea.form-control {
 .genericpage {
     background-color: #FCFCFA;
     color: #1F2730;
-    min-height: 100%;
 }
 
 .darklight {
@@ -143,7 +146,7 @@ textarea.form-control {
 
 .footer {
     height: 50px;
-    margin-top: -62px;
+    /*margin-top: -52px;*/
 }
 
 .footertext {
@@ -213,7 +216,7 @@ textarea.form-control {
 }
 
 .modalbckgrnd {
-    background-color: #faf6ed;
+    background-color: #FBF9F5;
     /*background-image: url("../Images/parchment.png");
     min-height: 100%;  You must set a specified height 
     background-position: center; /* Center the image 
@@ -287,8 +290,8 @@ textarea.form-control {
 }
 
 .messagebox{
-    padding-top: 100px;
-    padding-bottom:56px;
+    padding-top: 56px;
+    padding-bottom:28px;
 
 }
 

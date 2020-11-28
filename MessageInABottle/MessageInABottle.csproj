@@ -246,6 +246,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\_Message.cshtml" />
     <Content Include="Views\Shared\_LayoutHome.cshtml" />
+    <Content Include="Views\Home\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Home\TermsOfService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

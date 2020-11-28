@@ -26,6 +26,16 @@ namespace MessageInABottle.Controllers
             return View();
         }
 
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
+
+        public ActionResult TermsOfService()
+        {
+            return View();
+        }
+
         //POST: /Home/Home
         [HttpPost]
         public async Task<ActionResult> Index(Messages model)
@@ -181,9 +191,9 @@ namespace MessageInABottle.Controllers
 
                             message = (string)r["Message"];
                             messageId = (int)r["Id"];
+
                         } catch (Exception e)
                         {
-                            Debug.WriteLine(e.Message);
                             message = "There are no new messages at sea. Be the first to write one!";
                         }
                         
@@ -194,6 +204,7 @@ namespace MessageInABottle.Controllers
                 
             } catch(Exception e)
             {
+
                 //send message to DB
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -212,8 +223,13 @@ namespace MessageInABottle.Controllers
                     }
 
                     connection.Close();
+
+                    message = "An error occured. Please try again.";
                 }
             }
+
+            //replace new lines so they show up
+            message = message.Replace("\r\n", "<br />");
 
             string m = "{\"message\":\"" + message + "\",\"id\":\"" + messageId.ToString() + "\"}";
             return m;

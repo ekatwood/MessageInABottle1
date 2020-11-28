@@ -17,7 +17,7 @@
 
             @using (Html.BeginForm("Index", "Home", FormMethod.Post))
             {
-                @Html.TextAreaFor(m => m.Message, new { @class = "form-control text-area", placeholder = "Write a message in a bottle!", @Value = "", maxlength = 300 })
+                @Html.TextAreaFor(m => m.Message, new { @class = "form-control text-area", placeholder = "Write a message in a bottle!", maxlength = 300 })
 
                 <input type="submit" value="Send Message" class="btn btnstyles messagebtn" />
                 <br />
@@ -26,11 +26,11 @@
 
         </div>
     
-        <h4><span class="anotherbottle">A<span id="another"></span> mysterious bottle washes ashore...</span></h4>
+        <h4><span class="anotherbottle boundaries">A<span id="another"></span> mysterious bottle washes ashore...</span></h4>
     
         <button class="btnstyles btn" data-toggle="modal" id="displayMessage">Pick up bottle</button>
         <br />
-        <span class="errormsg"id="errorMessage"></span>
+        <div class="errormsgwrapper"><span class="errormsg" id="errorMessage"></span></div>
 
         <div class="modal fade modalmods" id="messageModal">
             <div class="modal-dialog">
