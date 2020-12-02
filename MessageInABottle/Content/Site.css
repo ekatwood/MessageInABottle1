@@ -41,7 +41,7 @@ textarea.form-control {
         min-height: 100%; 
         background-position: center; 
         background-repeat: no-repeat;
-        background-size: auto;
+        background-size: cover;
     }
 }
 
@@ -52,7 +52,7 @@ textarea.form-control {
         min-height: 100%;
         background-position: center;
         background-repeat: no-repeat;
-        background-size: auto;
+        background-size: cover;
     }
 }
 /*
@@ -123,11 +123,13 @@ textarea.form-control {
 .darklight {
     background-color: #1F2730;
     color: #FCFCFA;
-    padding-right:3px;
-    padding-left:3px;
-    padding-top:2px;
-    padding-bottom:2px;
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 3px;
 }
+
 
 .lightdark {
     background-color: #FCFCFA;
@@ -135,6 +137,7 @@ textarea.form-control {
     padding-right: 2px;
     padding-left: 2px;
     border-radius: 4px;
+    line-height:47px;
 }
 
 .content {
@@ -159,8 +162,10 @@ textarea.form-control {
 
 .footertext {
     font-size: 18px;
-    color: #1F2730;
-    font-family:Sumida
+    color: #FCFCFA;
+    background-color: #1F2730;
+    border-radius: 2px;
+    font-family: Sumida
 }
 
 .footertextgeneric {
@@ -216,7 +221,7 @@ textarea.form-control {
 }
 
 .modalmods{
-    margin-top:120px;
+    margin-top:90px;
 }
 
 .modal-body p {
@@ -225,7 +230,7 @@ textarea.form-control {
 
 .modalbckgrnd {
     /*background-color: #FBF9F5; */
-    background-image: url("../Images/parchment.png");
+    background-image: url("../Images/parchment.jpg");
     min-height: 100%;  
     background-position: center; 
     background-repeat: no-repeat; 
@@ -281,10 +286,9 @@ textarea.form-control {
 }
 
 .errormsg {
-    font-weight: bold;
-    color: #1F2730;
-    background-color: #FCFCFA;
-    border-radius:2px;
+    color: #FCFCFA;
+    background-color: #1F2730;
+    border-radius: 2px;
     font-size: 12px;
 }
 .errormsgwrapper {
