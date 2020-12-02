@@ -190,9 +190,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\backgroundwide.jpg" />
     <Content Include="Images\simplebackground.jpg" />
     <Content Include="Images\parchment.png" />
     <Content Include="Images\icon.png" />
+    <Content Include="Images\background.jpg" />
+    <Content Include="Images\parchment.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\SumidaScriptDemoRegular-X3GEg.otf" />

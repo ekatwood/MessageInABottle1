@@ -33,21 +33,29 @@ textarea.form-control {
 .mainpage{
     padding-bottom:52px;
 }
+
+
+@media only screen and (orientation: portrait) {
+    #homepage {
+        background-image: url("../Images/background.jpg");
+        min-height: 100%; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        background-size: auto;
+    }
+}
+
+
+@media only screen and (orientation: landscape) {
+    #homepage {
+        background-image: url("../Images/backgroundwide.jpg");
+        min-height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: auto;
+    }
+}
 /*
-
-@media only screen and (max-device-width: 828px) and (orientation: portrait) {
-    #homepage {
-        background-image: url("../Images/simplebackground.jpg");
-    }
-}
-
-
-@media only screen and (max-device-width: 1136px) and (orientation: landscape) {
-    #homepage {
-        background-image: url("../Images/small_landscape.png");
-    }
-}
-
 
 @media only screen and (min-device-width: 829px) and (orientation: portrait) {
     #homepage {
@@ -62,8 +70,7 @@ textarea.form-control {
     }
 }
 */
-
-.navbar-nav > li > a {
+        .navbar-nav > li > a {
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -127,6 +134,7 @@ textarea.form-control {
     color: #1F2730;
     padding-right: 2px;
     padding-left: 2px;
+    border-radius: 4px;
 }
 
 .content {
@@ -216,12 +224,12 @@ textarea.form-control {
 }
 
 .modalbckgrnd {
-    background-color: #FBF9F5;
-    /*background-image: url("../Images/parchment.png");
-    min-height: 100%;  You must set a specified height 
-    background-position: center; /* Center the image 
-    background-repeat: no-repeat; /* Do not repeat the image 
-    background-size: cover; /* Resize the background image to cover the entire container */
+    /*background-color: #FBF9F5; */
+    background-image: url("../Images/parchment.png");
+    min-height: 100%;  
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover; 
 }
 
 .modal-footer {
@@ -273,8 +281,10 @@ textarea.form-control {
 }
 
 .errormsg {
-    font-weight:bold;
+    font-weight: bold;
     color: #1F2730;
+    background-color: #FCFCFA;
+    border-radius:2px;
     font-size: 12px;
 }
 .errormsgwrapper {
@@ -282,10 +292,10 @@ textarea.form-control {
 }
 
 .mainbckgrnd {
-    background-image: url("../Images/simplebackground.jpg");
-    min-height: 100%; /*You must set a specified height */
-    background-position: left; /* Center the image */
-    background-repeat: repeat; /* Do not repeat the image */
+    /*background-image: url("../Images/background.jpg");
+    min-height: 100%; /*You must set a specified height 
+    background-position: left; /* Center the image 
+    background-repeat: repeat; /* Do not repeat the image 
     background-size: auto /* Resize the background image to cover the entire container */
 }
 
