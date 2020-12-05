@@ -17,18 +17,24 @@
 
             @using (Html.BeginForm("Index", "Home", FormMethod.Post))
             {
-                @Html.TextAreaFor(m => m.Message, new { @class = "form-control text-area", placeholder = "Write a message in a bottle!", maxlength = 300 })
-
-                <input type="submit" value="Send Message" class="btn btnstyles messagebtn" />
+                @Html.TextAreaFor(m => m.Message, new { @class = "form-control text-area", @id = "messageBox", placeholder = "Write a message in a bottle!", maxlength = 300 })
+                
+                <!--always clear the text area-->
+                <script type='text/javascript'>
+                    $('#messageBox').val('');
+                </script>
+                
+                <input type="submit" id="messageSubmit" value="Send Message" class="btn btnstyles messagebtn" />
                 <br />
                 <div class="errormsgwrapper"><span class="errormsg"> @ViewBag.MessageResponse </span></div>
             }
 
         </div>
-    
-        <h4><span class="anotherbottle boundaries lightdark">A<span id="another"></span> mysterious bottle washes ashore...</span></h4>
-    
-        <button class="btnstyles btn" data-toggle="modal" id="displayMessage">Pick up bottle</button>
+
+        <span class="anotherbottle">A<span id="another"></span> mysterious bottle washes ashore...</span>
+        <br />
+
+        <button class="btnstyles btn" data-toggle="modal" id="displayMessage" style="margin-top:5px;">Pick up bottle</button>
         <br />
         <div class="errormsgwrapper"><span class="errormsg" id="errorMessage"></span></div>
 
@@ -68,15 +74,15 @@ $(document).ready(function () {
             url: '/Home/DisplayMessage',
             dataType: "json",
             success: function (data) {
-                
+
                 m = data["message"];
                 id = data["id"];
 
                 $('#messageID').html(m);
                 $('#messageModal').modal("show");
-                    
+
             }
-        });        
+        });
     });
 
     $('#keepBottle').click(function () {
@@ -122,8 +128,6 @@ $(document).ready(function () {
             }
         });
     });
-
-
 
 });
 </script>

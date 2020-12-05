@@ -12,7 +12,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-xs-8">@m.Item1</div>
+                <div class="col-xs-8">@Html.Raw(m.Item1)</div>
                 <div class="col-xs-4">@Html.ActionLink("Return", "UpdateBottles", new { rowid = m.Item2.ToString(), @class = "btn" })</div>
             </div>
         </div>

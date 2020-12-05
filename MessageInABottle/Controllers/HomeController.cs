@@ -46,8 +46,7 @@ namespace MessageInABottle.Controllers
                 
             }
 
-
-            if(String.IsNullOrEmpty(model.Message))
+            if (String.IsNullOrEmpty(model.Message))
             {
                 ViewBag.MessageType = "alert-danger";
                 ViewBag.MessageResponse = "Message can't be blank.";
@@ -164,6 +163,7 @@ namespace MessageInABottle.Controllers
 
             try
             {
+                //get user id
                 if (String.IsNullOrEmpty(User.Identity.GetUserName()))
                 {
                     id = "";
@@ -172,25 +172,67 @@ namespace MessageInABottle.Controllers
                     id = User.Identity.GetUserName();
 
 
+                //get cookie, find out what messageId's they have seen, save to array / list
+                string messagesSeen;
+                string[] messagesSeenArr = { };
+
+                if (Request.Cookies["messagesSeen"] == null)
+                {
+                    messagesSeen = "";
+                }
+                else
+                {
+                    messagesSeen = Request.Cookies["messagesSeen"].Value;
+                    messagesSeenArr = messagesSeen.Split(',');
+                    
+                }
+
+                //set query
+                string query = "SELECT TOP 1 Message, Id from [dbo].Messages WHERE KeptBool = 0 and WrittenBy != '"+ id + "'";
+
+                if(messagesSeen == "")
+                {
+                    //don't add to query
+                }
+                else
+                {
+                    foreach(string msg in messagesSeenArr){
+                        query = query + " and Id != " + msg;
+                    }
+                }
+
+                query = query + " ORDER BY NEWID()";
+
+
+                //Debug.WriteLine("messagesSeen: " + messagesSeen);
+                //Debug.WriteLine("query: " + query);
+
                 //select random message from database
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    using (var command = new SqlCommand("SelectRandom", connection))
+                    using (var command = new SqlCommand(query, connection))
                     {
                         await connection.OpenAsync();
 
-                        command.CommandType = CommandType.StoredProcedure;
-
-                        command.Parameters.Add("@Id", SqlDbType.VarChar).Value = id;
-
                         try
                         {
+                            //get a random message
                             SqlDataReader r = await command.ExecuteReaderAsync();
 
                             r.Read();
 
                             message = (string)r["Message"];
                             messageId = (int)r["Id"];
+
+
+                            // if success, that means they have not seen the message, so add it to the cookie
+                            if (messagesSeen.Length == 0)
+                                messagesSeen = messagesSeen + messageId.ToString();
+                            else
+                                messagesSeen = messagesSeen + "," + messageId.ToString();
+
+                            Response.Cookies["messagesSeen"].Value = messagesSeen;
+
 
                         } catch (Exception e)
                         {
@@ -422,7 +464,11 @@ namespace MessageInABottle.Controllers
                         //read the results
                         while (r.Read())
                         {
-                            tupleList.Add(((string)r["Message"], (int)r["Id"]));
+                            //replace new lines so they show up
+                            string m = (string)r["Message"];
+                            m = m.Replace("\r\n", "<br />");
+
+                            tupleList.Add((m, (int)r["Id"]));
                         }
 
                         connection.Close();
@@ -552,7 +598,11 @@ namespace MessageInABottle.Controllers
                         //read the results
                         while (r.Read())
                         {
-                            tupleList.Add(((string)r["Message"], (int)r["SeenCount"], (bool)r["KeptBool"]));
+                            //replace new lines so they show up
+                            string m = (string)r["Message"];
+                            m = m.Replace("\r\n", "<br />");
+
+                            tupleList.Add((m, (int)r["SeenCount"], (bool)r["KeptBool"]));
                         }
 
                         connection.Close();

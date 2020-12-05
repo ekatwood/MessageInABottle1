@@ -169,8 +169,10 @@ textarea.form-control {
 }
 
 .footertextgeneric {
-    margin-bottom: 5px;
-    font-size: 12px;
+    font-size: 18px;
+    color: #1F2730;
+    border-radius: 2px;
+    font-family: Sumida
 }
 
 .fbicon {
@@ -243,9 +245,10 @@ textarea.form-control {
 }
 
 .anotherbottle {
-
-    font-size:33px;
-    font-family:Sumida
+    font-size: 33px;
+    font-family: Sumida;
+    /*text-shadow: -1px 0 #FCFCFA, 0 1px #FCFCFA, 1px 0 #FCFCFA, 0 -1px #FCFCFA;*/
+    text-shadow: 1px 1px 0 #FCFCFA, -1px 1px 0 #FCFCFA, 1px -1px 0 #FCFCFA, -1px -1px 0 #FCFCFA, 0px 1px 0 #FCFCFA, 0px -1px 0 #FCFCFA, -1px 0px 0 #FCFCFA, 1px 0px 0 #FCFCFA, 2px 2px 0 #FCFCFA, -2px 2px 0 #FCFCFA, 2px -2px 0 #FCFCFA, -2px -2px 0 #FCFCFA, 0px 2px 0 #FCFCFA, 0px -2px 0 #FCFCFA, -2px 0px 0 #FCFCFA, 2px 0px 0 #FCFCFA, 1px 2px 0 #FCFCFA, -1px 2px 0 #FCFCFA, 1px -2px 0 #FCFCFA, -1px -2px 0 #FCFCFA, 2px 1px 0 #FCFCFA, -2px 1px 0 #FCFCFA, 2px -1px 0 #FCFCFA, -2px -1px 0 #FCFCFA;
 }
 
 .btnstyles {
